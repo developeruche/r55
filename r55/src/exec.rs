@@ -126,9 +126,9 @@ pub fn run_tx(
 }
 
 #[derive(Debug)]
-struct RVEmu {
-    emu: Emulator,
-    created_address: Option<Address>,
+pub struct RVEmu {
+    pub emu: Emulator,
+    pub created_address: Option<Address>,
 }
 
 fn riscv_context(frame: &Frame) -> Option<RVEmu> {
@@ -228,7 +228,7 @@ pub fn handle_register<EXT, DB: Database>(handler: &mut EvmHandler<'_, EXT, DB>)
     });
 }
 
-fn execute_riscv(
+pub fn execute_riscv(
     rvemu: &mut RVEmu,
     interpreter: &mut Interpreter,
     _shared_memory: &mut SharedMemory,
@@ -572,7 +572,7 @@ fn execute_riscv(
     }
 }
 
-fn execute_call(
+pub fn execute_call(
     emu: &mut Emulator,
     interpreter: &mut Interpreter,
     host: &mut dyn Host,
@@ -637,7 +637,7 @@ fn execute_call(
     })
 }
 
-fn execute_create(
+pub fn execute_create(
     emu: &mut Emulator,
     interpreter: &mut Interpreter,
     _host: &mut dyn Host,
@@ -679,7 +679,7 @@ fn execute_create(
 }
 
 /// Returns RISC-V DRAM slice in a given size range, starts with a given offset
-fn dram_slice(emu: &mut Emulator, ret_offset: u64, ret_size: u64) -> Result<&mut [u8]> {
+pub fn dram_slice(emu: &mut Emulator, ret_offset: u64, ret_size: u64) -> Result<&mut [u8]> {
     if ret_size != 0 {
         Ok(emu
             .cpu
@@ -690,7 +690,7 @@ fn dram_slice(emu: &mut Emulator, ret_offset: u64, ret_size: u64) -> Result<&mut
     }
 }
 
-fn r55_gas_used(inst_count: &BTreeMap<String, u64>) -> u64 {
+pub fn r55_gas_used(inst_count: &BTreeMap<String, u64>) -> u64 {
     let total_cost = inst_count
         .iter()
         .map(|(inst_name, count)|
