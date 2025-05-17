@@ -131,7 +131,7 @@ pub struct RVEmu {
     pub created_address: Option<Address>,
 }
 
-fn riscv_context(frame: &Frame) -> Option<RVEmu> {
+pub fn riscv_context(frame: &Frame) -> Option<RVEmu> {
     let interpreter = frame.interpreter();
 
     let Some((0xFF, bytecode)) = interpreter.bytecode.split_first() else {
